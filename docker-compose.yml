@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: linkfields_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: telecom_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-db:/docker-entrypoint-initdb.d
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: linkfields_swagger
+    ports:
+      - "8080:8080"
+    environment:
+      SWAGGER_JSON: /openapi/spec.yaml
+    volumes:
+      - ./swagger:/openapi
